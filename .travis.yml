@@ -12,6 +12,12 @@ python:
   - "3.7-dev" # 3.7 development branch
   - "nightly" # currently points to 3.7-dev
 # command to install dependencies
-install: "pip install -r requirements.txt"
+#install: "pip install -r requirements.txt"
 # command to run tests
 script: pytest
+
+deploy:
+  provider: pypi
+  user: "eszense"
+  password:
+    secure: "mG+Mzh77TJxrXqM8cVRyysOJDVmJCnluYDVAnL2+h5TZFLnkgwxUm9IFkjSkFPcUxf5wDKXhNN27Wzs8S0GyLdv5SYR3urh8EZRt9091nxRyhXS6zj9RCJnNDjCcsBHl44S0hBHxxV9vbT5UO29jSfqErsW8idmvusBqEbuEC0luvC3miuOBfXW+8Y0Ppk4KamV+YVXoUXqXNkLenC9ZD1OlPyRLa/auKF4rBRvlWw+KWjlAaJeY1PvmgfNG7JrMGYL9fZxn4Kb56aISRTu4y7x7G5KpGFDibEIzIlRLQ6BrbFcTYJi4vG9aETmqT7HlX0ObJfXQmkPwzDCt5U8k+wot5jmfzHRiRv+1JpSB3L3LP2ghW9qvi5q8ZlpOqewdGDH3TRyqYn9L4spC8v6rRqdL+Of+7Xa4fNkSeck38uZ/rjNt22hZ2l1qAij2+117x7Rqztyr1pCtFp0JXZjMqPNMaaRY0XyCDf/LYZ5Frvub4ARR9qA65flZeVroWNzkg0kX8nMFyZtmh0Uo6UkQT3Aq3Aol0SyS/c1BmTsFbj/ycmQDVnfCHCrgJ47RkFTPUnNJ3X1hbbY37dMM1rFhqI8KUpqWqhLyGEX8+edpMCdx3YqjlwqCqcltiAEjTamEb6fan8O7jgkW7DBRPq4Xa7kXoKT8UQjAB2sqKcLgNsU="

@@ -1,1 +1,4 @@
-setup(name="chromedrvr")
+setup(
+    name="chromedrvr"
+    py_modules="chromedrvr"
+    )

@@ -1,4 +1,4 @@
 setup(
     name="chromedrvr"
-    py_modules="chromedrvr"
+    py_modules=["chromedrvr"]
     )

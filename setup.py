@@ -23,46 +23,51 @@ class sdistx(sdist):
             key=lambda x:[int(re.search(r'\d+','0'+key).group()) for key in x.split('.')])
         for version in versions:
             if version == 'icons/': continue
-            self.distribution.metadata.version=version[:-1]
+            self.distribution.metadata.version=version[:-1] +'.post'+inst_ver
+            with open('VERSION','w') as f:
+                f.write(version[:-1])
             sdist.run(self)
             archive_files.extend(self.archive_files)
-                #print()
 
         self.archive_files = archive_files
-        os.remove('VERSION')
-
-    def get_file_list(self):
-        self.filelist.append("VERSION")
-        with open('VERSION','w') as f:
-            f.write(self.distribution.metadata.version)
-        sdist.get_file_list(self)
 
 
 class build_scriptsx(build_scripts):
     def run(self):
         build_scripts.run(self)
-        
+        with open('VERSION','r') as f:
+            ver = f.read().strip()
+
         platform = get_platform()
         if platform[:3] == "win":
             platform = 'win32'
+        elif platform[:6] == 'macosx':
+            platform = 'mac32'
         else:
-            raise Exception('Unrecognized platform: "%s"' % platform)
-        base = 'https://chromedriver.storage.googleapis.com/%s/chromedriver_%s.zip' % (
-            self.distribution.metadata.version, platform)
+            platform = 'linux64' if sys.maxsize == 9223372036854775807 else 'linux32'
+        base = 'https://chromedriver.storage.googleapis.com/%s/chromedriver_%s.zip'
+        base = base % (ver, platform)
 
         with ZipFile(urlretrieve(base)[0]) as archive:
             archive.extract(archive.namelist()[0], path=self.build_dir)
-        ##    urlopen(base)
 
 
-ver = '2.27'
-with suppress(FileNotFoundError):
+
+if os.path.isfile('VERSION'):
     with open('VERSION','r') as f:
-        ver = f.read()
+        ver = f.read().strip()
+else:
+    ver = urlopen('https://chromedriver.storage.googleapis.com/LATEST_RELEASE').read().strip()
+    with open('VERSION','w') as f:
+        f.write(ver)
+
+inst_ver = '1'
+ver = ver +'.post'+inst_ver
+
 
 setup(
     name="chromedrvr",
-#    py_modules=["chromedrvr"],
     version=ver,
+    scripts=['chromedriver'],
     cmdclass={'sdist':sdistx, 'build_scripts':build_scriptsx}
     )

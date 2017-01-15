@@ -23,7 +23,7 @@ script: python -m unittest
 
 deploy:
   on:
-    python: 3.5
+    python: '3.5'
   provider: pypi
   distributions: "sdist bdist"
   user: "eszense"

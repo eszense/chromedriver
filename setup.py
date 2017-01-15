@@ -61,7 +61,7 @@ else:
     with open('VERSION','w') as f:
         f.write(ver)
 
-inst_ver = '1'
+inst_ver = '2'
 ver = ver +'.post'+inst_ver
 
 
